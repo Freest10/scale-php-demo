@@ -1,0 +1,45 @@
+.products
+    - var groups = ["catalog"];
+    - var countryFieldName;
+    case pageInfo.page.typeId
+        when 59
+            - groups.push('cactus_properties');
+            - countryFieldName = 'manufacturer__cactus'
+        when 60
+            - groups.push('bonsai_properties');
+            - countryFieldName = 'manufacturer__bonsai'
+        when 61
+            - groups.push('succulents_properties');
+            - countryFieldName = 'manufacturer__succulents'
+    - var page = (reqParams["get"]["p"]) ? reqParams["get"]["p"]/1 : 1;
+    - var limit = 5;
+    - var begin = (page - 1) * limit;
+    - var filters = [];
+    - var priceMin = reqParams["get"]["price_min"] ? reqParams["get"]["price_min"]/1 : null;
+    - var priceMax = reqParams["get"]["price_max"] ? reqParams["get"]["price_max"]/1 : null;
+        if(priceMin || priceMax)
+            - filters.push({name:"price__catalog", min: priceMin, max: priceMax})
+    - var country =  reqParams["get"]["country"] ? reqParams["get"]["country"]/1 : null;
+    if(country)
+        - filters.push({name: countryFieldName, equal: country})
+
+    - var sortFieldName = filters.length > 0 ? 'price__catalog' : null;
+    - var productParams ={childOf: pageInfo.page.id, depth: 1, filters: filters, groups: groups, begin: begin, limit: limit, sortByField: sortFieldName}
+    - var products = macro_getPages(productParams)
+    each product, id in products.pages
+        .mdc-card.product-card
+            a.mdc-ripple-surface(href=product.url)
+                .mdc-card__media
+                    .image-card
+                        - var image = product.groups.catalog.props.product_image.value;
+                        - var optionsThumbnail ={crop:"center",height:200,quality:100, format:"tag"};
+                        - var thumbImage = macro_thumbnail(image, optionsThumbnail);
+                        != thumbImage
+                .demo-card__primary.mdc-typography--headline6.title-card!= product.text
+                .price-card
+                    span.price-card-value!= product.groups.catalog.props.price__catalog.value
+                    .material-icons.mdc-list-item__graphic(aria-hidden='true')!= 'attach_money'
+            .mdc-card__actions.product-actions
+                .mdc-card__action-buttons
+                    button.add-to-basket.mdc-button.mdc-card__action.mdc-card__action--button(data-id=id) Add to basket
++pagination(pageInfo.page.url, products.total, page, limit)

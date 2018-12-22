@@ -1,0 +1,26 @@
+h1.mdc-typography--headline5!= pageInfo.page.name
+#ordering-form
+    span.order-input
+        #name-ordering.order-input.mdc-text-field.mdc-text-field--outlined
+            input.mdc-text-field__input(required='required')
+            label.mdc-floating-label(for='name-ordering') Name
+            .mdc-notched-outline
+                svg
+                    path.mdc-notched-outline__path
+            .mdc-notched-outline__idle
+        p#name-ordering-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+            | Name is required field
+    span.order-input
+        #phone-ordering.mdc-text-field.mdc-text-field--outlined
+            input.mdc-text-field__input(required='required')
+            label.mdc-floating-label(for='phone-ordering') Phone
+            .mdc-notched-outline
+                svg
+                    path.mdc-notched-outline__path
+            .mdc-notched-outline__idle
+        p#phone-ordering-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+            | Phone is required field
+    .mdc-card__actions.product-actions
+        .mdc-card__action-buttons
+            button#checkout-ordering.mdc-button.mdc-card__action.mdc-card__action--button Checkout
+script(src='/js/client/ordering.js')

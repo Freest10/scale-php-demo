@@ -1,0 +1,18 @@
+div#main-slider-wrap
+    div#main-slider
+        - var slideParams ={childOf:3, depth:1, typeIds:[56], noActive:true, filters:[{name:"active__slide", equal:1}], groups: ["slide"]}
+        - var slides = macro_getPages(slideParams);
+
+        mixin slide(val)
+            - var image = val.groups.slide.props.image__slide.value;
+            - var title = val.groups.slide.props.title__slide.value;
+            - var background = val.groups.slide.props.background.value;
+            - var optionsThumbnail ={crop:"center",height:478,quality:100, format:"tag"};
+            - var thumbImage = macro_thumbnail(image, optionsThumbnail);
+            .item__main-slider.mdc-typography--headline3(style={background: background})
+                div.slide-content
+                    h3.title_slider
+                        != title
+                    != thumbImage
+        each val in slides.pages
+            +slide(val)

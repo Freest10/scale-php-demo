@@ -1,0 +1,4 @@
+- var basket = macro_getBasket()
+- var activeClass = basket ? 'top-basket__active' : '';
+span(class!=activeClass)
+    a.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(href='/basket') shopping_cart

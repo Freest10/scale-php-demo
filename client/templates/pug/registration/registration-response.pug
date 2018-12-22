@@ -1,0 +1,17 @@
+- var login = reqParams.get.login;
+- var email = reqParams.get.email;
+- var password = reqParams.get.password;
+- var confirmPassword = reqParams.get.confirmPassword;
+- var createUserParams ={login: login, password: password, passwordConfirm: confirmPassword, fields: {email_user: email}}
+- var userCreate = macro_createUser(createUserParams)
+
+if(userCreate.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+userCreate.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+userCreate.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)

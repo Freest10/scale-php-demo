@@ -1,0 +1,32 @@
+//- товар (изображение + характеристики)
+- var image = pageInfo.groups.catalog.fields.product_image.value;
+- var optionsThumbnail ={crop:"center",height:400,quality:100, format:"tag"};
+- var thumbImage = macro_thumbnail(image, optionsThumbnail);
+.product
+    .product-image
+        != thumbImage
+    .product-description
+        case pageInfo.page.typeId
+            when 63
+                - countryNameId = pageInfo.groups.cactus_properties.fields.manufacturer__cactus.value
+                - countryReference = macro_getReferences({ids:[64]})
+                - countryName = countryReference[64].items[countryNameId].text
+            when 69
+                - countryNameId = pageInfo.groups.bonsai_properties.fields.manufacturer__bonsai.value
+                - countryReference = macro_getReferences({ids:[67]})
+                - countryName = countryReference[67].items[countryNameId].text
+            when 70
+                - countryNameId = pageInfo.groups.succulents_properties.fields.manufacturer__succulents.value
+                - countryReference = macro_getReferences({ids:[68]})
+                - countryName = countryReference[68].items[countryNameId].text
+        ul.mdc-list(aria-orientation='vertical')
+            li.mdc-list-item
+                span.mdc-list-item__text
+                    | Country:&nbsp;
+                    != countryName
+        .product-footer-block
+            div
+                span.price-product-value!= pageInfo.groups.catalog.fields.price__catalog.value
+                .product-currency.material-icons.mdc-list-item__graphic(aria-hidden='true')!= 'attach_money'
+            div
+                button.add-to-basket.mdc-button.mdc-card__action.mdc-card__action--button(data-id=pageInfo.page.id) Add to basket

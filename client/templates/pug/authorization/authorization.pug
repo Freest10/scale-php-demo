@@ -1,0 +1,31 @@
+aside#mdc-dialog-auth.mdc-dialog(role='alertdialog', aria-labelledby='mdc-dialog-with-list-label', aria-describedby='mdc-dialog-with-list-description')
+    .mdc-dialog__surface
+        header.mdc-dialog__header
+            h2#mdc-dialog-with-list-label.mdc-dialog__header__title
+                | Authorization
+        section#mdc-dialog-with-list-description.auth-dialog__body.mdc-dialog__body.mdc-dialog__body--scrollable
+            div
+                #auth-login.mdc-text-field.mdc-text-field--outlined
+                    input.mdc-text-field__input(required='required', aria-controls="auth-login-required", aria-describedby="auth-login-required")
+                    label.mdc-floating-label(for='auth-login') Login
+                    .mdc-notched-outline
+                        svg
+                            path.mdc-notched-outline__path
+                    .mdc-notched-outline__idle
+                p#auth-login-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+                    | Login is required field
+            div
+                #auth-password.mdc-text-field.mdc-text-field--outlined
+                    input.mdc-text-field__input(required='required', type="password", aria-controls="auth-password-required", aria-describedby="auth-password-required")
+                    label.mdc-floating-label(for='auth-password') Password
+                    .mdc-notched-outline
+                        svg
+                            path.mdc-notched-outline__path
+                    .mdc-notched-outline__idle
+                p#auth-password-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+                    | Password is required field
+            button#forgot-password-link.mdc-button.mdc-button__icon Forgot password?
+        footer.mdc-dialog__footer
+            button.mdc-button.mdc-dialog__footer__button.mdc-dialog__footer__button--cancel(type='button') Cancel
+            button#do_auth.mdc-button.mdc-dialog__footer__button(type='button') Accept
+    .mdc-dialog__backdrop

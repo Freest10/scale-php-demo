@@ -1,0 +1,62 @@
+mixin link(href, name, className, title, itempropVal)
+    a(class=className href=href title=title itemprop=itempropVal)= name
+mixin img(path, alt, title)
+    -var titleText = (title) ? title : alt;
+    img(src=path alt=alt title=titleText)
+mixin btn_link_default(link, text)
+    a(href=link class="btn btn_default")= text
+
+//- paginations
+mixin pagination(urlPage, total, page, limit)
+    - var total = total/1;
+    - var page = page/1;
+    - var activePage = (page > total) ? total : page;
+    - var maxVsiblePages = 5;
+    - var visiblePagesAfter = 2;
+    - var balancePages = total - activePage;
+    - var perPage = limit
+    - var totalPagesBalance = total%perPage
+    - var needToUnit = (totalPagesBalance > 0) ? (perPage-totalPagesBalance) : 0;
+    - var totalPages = (total+needToUnit)/perPage;
+    if(totalPages > 1)
+        if(activePage < maxVsiblePages)
+            - var showPrevArr = activePage !== 1;
+            - var pagesNums = (maxVsiblePages < totalPages) ?  maxVsiblePages  : totalPages ;
+            - var showNextArr = activePage !== maxVsiblePages && activePage !== totalPages && (pagesNums > 1);
+            +renderPagination(urlPage, 1, pagesNums, activePage, showPrevArr, showNextArr)
+        else
+            - var balanceTotal = totalPages-activePage;
+            - var pagesAfterActive = (balanceTotal > visiblePagesAfter) ? visiblePagesAfter : balanceTotal;
+            - var endPages = activePage + pagesAfterActive;
+            - var beginPages = activePage - visiblePagesAfter;
+            - var showNextArr = pagesAfterActive > 0;
+            - var showPrevArr = true;
+            +renderPagination(urlPage, beginPages, endPages, activePage, showPrevArr, showNextArr)
+
+mixin renderPagination(urlPage, beginNum, endNum, activeNum, showPrevArr, showNextArr)
+    - var n = beginNum;
+    - var params =  reqParams["get"];
+    - var requestParams = '';
+    - var excludesRequestParams = ['p', 'xhrRequestType'];
+    if(showPrevArr || showNextArr)
+        each paramValue, paramName in params
+            if(!(excludesRequestParams.indexOf(paramName) > -1))
+                - requestParams = requestParams + '&'+paramName+'='+paramValue
+    ul.pagination
+        if(showPrevArr)
+            li
+                - var prevArrUrl = urlPage+"?p="+(activeNum-1)
+                a(href=prevArrUrl)
+                    .material-icons.mdc-list-item__graphic.arrow-pag(aria-hidden='true') keyboard_arrow_left
+        while n <= endNum
+            - var acitveClass = (activeNum == n) ? "active" : "waves-effect";
+            li(class=acitveClass)
+                - var urlForButton = urlPage+"?p="+n+requestParams
+                a(href=urlForButton, class="mdc-button")= n++
+        if(showNextArr)
+            li
+                - var actvNm = activeNum;
+                - var actvNm = actvNm+1;
+                - var prevArrUrl = urlPage+"?p="+actvNm+requestParams;
+                a(href=prevArrUrl)
+                    .material-icons.mdc-list-item__graphic.arrow-pag(aria-hidden='true') keyboard_arrow_right

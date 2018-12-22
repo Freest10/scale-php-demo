@@ -1,0 +1,18 @@
+.mdc-toolbar__section.mdc-toolbar__section--align-end.mdc-toolbar__section--shrink-to-fit(ng-reflect-align-end='true', ng-reflect-shrink-to-fit='true')
+    #top-basket
+        include basket/top-basket
+    span.search-icon.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded search
+    if pageInfo.userId
+        a.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(href='/account') person
+    .toolbar.mdc-menu-anchor
+        .user-toolbar-button.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(href='#/drawer-demo') more_vert
+        #user-toolbar.mdc-menu(tabindex='-1')
+            ul.mdc-menu__items.mdc-list(role='menu', aria-hidden='true')
+                if pageInfo.userId
+                    li#logout.mdc-list-item(role='menuitem', tabindex='0')
+                        | logout
+                else
+                    li.mdc-list-item.auth-form(role='menuitem', tabindex='0')
+                        | authorization
+                    li.mdc-list-item(role='menuitem', tabindex='0')
+                        a(href="/registration")  registration

@@ -1,0 +1,34 @@
+h3.mdc-typography--headline5= 'Account'
+if pageInfo.userId
+    - var userInfo = macro_getUsers({ids: [pageInfo.userId], groups: ['field_of_user']})
+    - userInfo = userInfo[pageInfo.userId]
+    ul.mdc-list(aria-orientation='vertical')
+        li.mdc-list-item
+            span.mdc-list-item__text
+                | Login:&nbsp;
+                != userInfo.login
+        li.mdc-list-item
+            span.mdc-list-item__text
+                | Email:&nbsp;
+                != userInfo.groups.field_of_user.props.email_user.value
+    - var orders = macro_getOrdersForUsers({ids: [pageInfo.userId]})
+    table#basket
+        thead
+            tr
+                td='Order'
+                td='Products (amount)'
+                td='Total price, $'
+        each order, id in orders
+            tr
+                td!= id
+                td
+                    each product in order.products
+                        div
+                            a(href!=product.url)
+                                !=product.productName
+                            |&nbsp;(
+                            !=product.amount
+                            |)
+                        br
+                td
+                    != order.totalPrice

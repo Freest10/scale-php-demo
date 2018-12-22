@@ -1,0 +1,28 @@
+- var searchString = reqParams.get['search-string'];
+- var searchTypes = ["1","57","59","63", "60", "69", "61", "70", ""];
+- var page = reqParams.get.p ? req_params["get"]["p"] : 1;
+form
+    #search-string-page.mdc-text-field.mdc-text-field--outlined
+        input.mdc-text-field__input(required='required', name='search-string', value!= searchString, aria-controls="auth-login-required", aria-describedby="auth-login-required")
+        label.mdc-floating-label(for='search-string-page') Search
+        .mdc-notched-outline
+            svg
+                path.mdc-notched-outline__path
+        .mdc-notched-outline__idle
+    button#search-page-button.mdc-button.mdc-dialog__footer__button(type='submit')
+        span.search-icon.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded search
+- var limit = globalPage.groups.search__global.props.search_limit__global.value;
+- var searchPageOptions = {searchString:searchString,typeIds:searchTypes,page:page, limit:limit};
+- var searchPageResult = macro_search(searchPageOptions);
+if searchPageResult.total > 0
+    h3.mdc-typography--headline6
+        | Search result
+    ul.mdc-list(aria-orientation='vertical')
+        each valueOfSearch in searchPageResult.value
+            li.mdc-list-item
+                span.mdc-list-item__text
+                    a(href!=valueOfSearch.url)!= valueOfSearch.pageName
+    +pagination(urlPage, searchPageResult.total, page, limit)
+else
+    p= 'Nothing found'
+script(src='/js/client/search-page.js')

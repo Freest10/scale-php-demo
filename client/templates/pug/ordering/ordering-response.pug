@@ -1,0 +1,15 @@
+- var name = reqParams.get.name;
+- var phone = reqParams.get.phone;
+- var orderData = {name_customer: name, phone_customer: phone}
+- var orderMacros = macro_setOrder(orderData)
+
+if(orderMacros.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+orderMacros.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+orderMacros.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)

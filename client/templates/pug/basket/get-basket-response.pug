@@ -1,0 +1,14 @@
+- var basket = macro_getBasket()
+
+if(basket.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+basket.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+basket.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)
+else
+    != basket

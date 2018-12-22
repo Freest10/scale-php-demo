@@ -1,0 +1,15 @@
+- var login = reqParams.get.login;
+- var password = reqParams.get.password;
+- var authUserParams ={login: login, password: password, rememberMe: 1}
+- var userAuth = macro_authUser(authUserParams)
+
+if(userAuth.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+userAuth.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+userAuth.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)

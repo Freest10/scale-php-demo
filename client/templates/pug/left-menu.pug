@@ -1,0 +1,14 @@
+- var mainMenuParams ={childOf:"0",depth:2,typeIds:[1, 57], filters:[{name:"show_main_menu", equal:1}],groups:["share"]}
+- var mainMenu = macro_getPages(mainMenuParams);
+
+.left-menu.mdc-drawer--permanent.mdc-drawer(role='navigation')
+    .mdc-drawer__drawer(role='navigation')
+        .mdc-drawer__content
+            .mdc-list-group
+                .mdc-list(role='list')
+                    each page, index in mainMenu.pages
+                        -var linkClass =  (page.active || page.childrenActive) ? "mdc-list-item--selected" : null;
+                        -var iconName = page.groups.share.props.main_menu_icon__share.value;
+                        a(class="mdc-list-item mdc-ripple-upgraded "+linkClass, href=page.url, role='listitem')
+                            .material-icons.mdc-list-item__graphic(aria-hidden='true')!= iconName
+                            != page.text

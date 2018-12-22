@@ -1,0 +1,19 @@
+mixin breadCrumbs()
+    - var breadCrumbs = macro_getBreadCrumbs();
+    if(breadCrumbs.total > 2)
+        .breadcrumbs
+            each item, index in breadCrumbs.pages
+                if(item.url != "/")
+                    +breadCrumb(item, index, breadcrumbNum)
+
+//- breadcrumb
+mixin breadCrumb(item, index, num)
+    if(item.active)
+        button.mdc-button.mdc-ripple-upgraded(disabled="true")
+            != item.text
+
+    if(!item.active)
+        a(href=item.url, class="mdc-button mdc-ripple-upgraded")!= item.text
+        span.material-icons.mdc-list-item__graphic.breadcrumb-arrow arrow_right_alt
+
++breadCrumbs()

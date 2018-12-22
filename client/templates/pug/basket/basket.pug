@@ -1,0 +1,44 @@
+- var basket = macro_getBasket()
+if(!basket)
+    .empty-basket= 'Basket is empty'
+else
+    - var pageIds = [];
+    each value, id in basket
+        - pageIds.push(id);
+
+    - var productParams ={pageIds: pageIds, groups:["catalog"]}
+    - var productPages = macro_getPagesById(productParams);
+    - var totalPrice = 0;
+    table#basket
+        thead
+            tr
+                td='Name'
+                td='Count'
+                td='Price, $'
+                td
+        each productPage, id in productPages
+            tr
+                td
+                    a(href=productPage.url)!= productPage.text
+                td
+                    .wrap-count-basket
+                        button.add-count-product.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(data-id!= id, data-count!= basket[id].amount) add
+                        .count-product-input.mdc-text-field.mdc-text-field--outlined
+                            input.mdc-text-field__input(disabled, value!= basket[id].amount)
+                            .mdc-notched-outline
+                                svg
+                                    path.mdc-notched-outline__path
+                            .mdc-notched-outline__idle
+                        button.remove-count-product.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(data-id!= id, data-count!= basket[id].amount) remove
+                td
+                    - var priceOfProduct =  productPage.groups.catalog.props.price__catalog.value * basket[id].amount
+                    - totalPrice = totalPrice + priceOfProduct
+                    != priceOfProduct
+                td
+                    div.delete-product.material-icons.mdc-toolbar__icon.mdc-ripple-surface.mdc-ripple-upgraded--unbounded.mdc-ripple-upgraded(data-id=id) delete
+    .basket-footer
+        div
+            a.mdc-button(href="/ordering")= 'Go to checkout'
+        #total-price
+            span.total-price__title= 'Total price:'
+            span.total-price__count!= totalPrice+' $'

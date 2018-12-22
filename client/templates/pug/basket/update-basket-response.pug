@@ -1,0 +1,14 @@
+- var products = reqParams.request.products;
+- var updateBasketData = {products: products}
+- var basketMacros = macro_updateBasket(updateBasketData)
+
+if(basketMacros.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+basketMacros.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+basketMacros.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)

@@ -1,0 +1,14 @@
+- var productId = reqParams.get.id;
+- var addToBasketData = {products: [{productId: productId, amount: 1}]}
+- var basketMacros = macro_addToBasket(addToBasketData)
+
+if(basketMacros.errorCode)
+    - var errorResponse = "{"
+    - errorResponse = errorResponse+'"errorCode":'
+    - errorResponse = errorResponse+'"'+basketMacros.errorCode+'"'
+    - errorResponse = errorResponse+','
+    - errorResponse = errorResponse+'"description":'
+    - errorResponse = errorResponse+'"'+basketMacros.description+'"'
+    - errorResponse = errorResponse+"}"
+    != errorResponse
+    - macro_setResponseHeaderCode(400)

@@ -1,0 +1,16 @@
+//- Разделы каталога (карточки)
+- var catalogMenuParams ={childOf:7, depth: 1, groups:["catalog"], filters:[{name:"show_catalog_menu__catalog", equal:1}]}
+- var mainMenu = macro_getPages(catalogMenuParams);
+
+.catalog-menu-cards
+    each catalogItem in mainMenu.pages
+        - var image = catalogItem.groups.catalog.props.section_image__catalog.value;
+        - var optionsThumbnail ={crop:"center",height:200,quality:100, format:"tag"};
+        - var thumbImage = macro_thumbnail(image, optionsThumbnail);
+        a.mdc-card(href=catalogItem.url)
+            .mdc-card-primary-action.mdc-ripple-surface.mdc-ripple-upgraded
+                .mdc-card-media
+                    .image-card
+                        != thumbImage
+                    .demo-card__media-content--with-title
+                        .demo-card__media-title!= catalogItem.text

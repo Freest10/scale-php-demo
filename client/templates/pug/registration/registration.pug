@@ -1,0 +1,42 @@
+h1.mdc-typography--headline5 Registration
+    .registration
+        div.registration_form
+            #registration-login.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input
+                label.mdc-floating-label(for='registration-login') Login
+                .mdc-notched-outline
+                    svg
+                        path.mdc-notched-outline__path
+                .mdc-notched-outline__idle
+            br
+            #registration-email.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type='email')
+                label.mdc-floating-label(for='registration-email') Email
+                .mdc-notched-outline
+                    svg
+                        path.mdc-notched-outline__path
+                .mdc-notched-outline__idle
+            br
+            #registration-password.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type='password')
+                label.mdc-floating-label(for='registration-password') Password
+                .mdc-notched-outline
+                    svg
+                        path.mdc-notched-outline__path
+                .mdc-notched-outline__idle
+            br
+            #registration-confirm-password.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type='password')
+                label.mdc-floating-label(for='registration-confirm-password') Confirm password
+                .mdc-notched-outline
+                    svg
+                        path.mdc-notched-outline__path
+                .mdc-notched-outline__idle
+            #registration-errors.errors
+            button.mdc-button.mdc-button--raised#registration-button
+                | Send
+    #registration-success.mdc-snackbar
+        .mdc-snackbar__text
+        .mdc-snackbar__action-wrapper
+            button.mdc-snackbar__action-button(type='button')
+script(src='/js/client/registration.js')

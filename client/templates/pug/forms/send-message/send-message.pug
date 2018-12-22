@@ -1,0 +1,29 @@
+- var messageParams ={ids:[77],groups:["send_message_properties"]}
+- var messageType = macro_getTypes(messageParams);
+#mdc-dialog-send-message
+    div
+        #name-send-message.mdc-text-field.mdc-text-field--outlined
+            input.mdc-text-field__input(required='required')
+            label.mdc-floating-label(for='name-send-message')!= messageType[77].groups.send_message_properties.props.name_send_message_properties.text
+            .mdc-notched-outline
+                svg
+                    path.mdc-notched-outline__path
+            .mdc-notched-outline__idle
+        p#auth-login-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+            | Name is required field
+    div
+        #email-send-message.mdc-text-field.mdc-text-field--outlined
+            input.mdc-text-field__input(required='required')
+            label.mdc-floating-label(for='email-send-message')!= messageType[77].groups.send_message_properties.props.email_send_message_properties.text
+            .mdc-notched-outline
+                svg
+                    path.mdc-notched-outline__path
+            .mdc-notched-outline__idle
+        p#auth-password-required.error-input.mdc-text-field-helper-text--validation-msg(aria-hidden="true")
+            | Email is required field
+
+    #message-send-message.mdc-text-field.mdc-text-field--textarea.mdc-text-field--outlined
+        textarea.mdc-text-field__input(required='required')
+        label.mdc-floating-label(for='message-send-message')!= messageType[77].groups.send_message_properties.props.message_send_message_properties.text
+    footer.mdc-dialog__footer
+        button#do_send_message.mdc-button.mdc-dialog__footer__button(type='button') Send

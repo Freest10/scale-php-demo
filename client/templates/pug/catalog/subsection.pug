@@ -1,0 +1,52 @@
+//- фильтр товаров + карточки товаров
+if(pageInfo.page.parentId === '7')
+    - var manufactureIds = []
+    case pageInfo.page.typeId
+        when 59
+            - manufactureIds.push(pageInfo.groups.cactus_properties.fields.manufacturer__cactus.referenceId);
+        when 60
+            - manufactureIds.push(pageInfo.groups.bonsai_properties.fields.manufacturer__bonsai.referenceId);
+        when 61
+            - manufactureIds.push(pageInfo.groups.succulents_properties.fields.manufacturer__succulents.referenceId);
+    - var manufactureReferencesOptions = {ids: manufactureIds};
+        
+    - var manufactures =  macro_getReferences(manufactureReferencesOptions)
+    .products-content
+        script(src='/js/client/products.js')
+        .filter
+            .mdc-typography--headline4 Filter
+            .filter-block
+                .title-form-field.mdc-typography--headline6 Price, $
+                .range-group
+                    #min-price.mdc-text-field.mdc-text-field--outlined.small-field
+                        input.mdc-text-field__input(type='number')
+                        label.mdc-floating-label(for='min-price') Min
+                        .mdc-notched-outline
+                            svg
+                                path.mdc-notched-outline__path
+                        .mdc-notched-outline__idle
+                    .defis.material-icons.mdc-list-item__graphic(aria-hidden='true') remove
+                    #max-price.mdc-text-field.mdc-text-field--outlined.small-field
+                        input.mdc-text-field__input(type='number')
+                        label.mdc-floating-label(for='max-price') Max
+                        .mdc-notched-outline
+                            svg
+                                path.mdc-notched-outline__path
+                        .mdc-notched-outline__idle
+                #filter-range-errors.errors
+                .title-form-field.mdc-typography--headline6 Country
+                #country.mdc-select.filter-select
+                    select.mdc-select__native-control
+                        option(value='', selected='')
+                        each manufacture in manufactures
+                            each item, id in manufacture.items
+                                option(value!=id)!= item.text
+                    label.mdc-floating-label Select a country
+                    .mdc-line-ripple
+                .actions
+                    button.mdc-button#reset-filter
+                        | Reset
+                    button.mdc-button.mdc-button--raised#apply-filter
+                        | Apply
+        #products-wrap
+            include products-filter.pug

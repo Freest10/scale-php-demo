@@ -1,0 +1,31 @@
+include breadcrumbs.pug
+
+if pageInfo.page.id === '7'
+    include catalog/catalog.pug
+
+case pageInfo.page.typeId
+    when '59'
+    when '60'
+    when '61'
+        include catalog/subsection.pug
+    when '78'
+        include search/search
+    when '72'
+        include registration/registration
+    when '74'
+        include password-recovery/password-recovery-new-password
+    when '75'
+        #wrap-basket
+            include basket/basket
+    when '76'
+        include ordering/ordering
+    when '63'
+    when '69'
+    when '70'
+        include catalog/product
+    when '73'
+        include user/account
+
+- var contentValue = pageInfo.groups.share.fields.content_share.value
+if contentValue
+    .content-share!= contentValue

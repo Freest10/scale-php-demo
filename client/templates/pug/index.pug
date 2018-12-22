@@ -1,0 +1,86 @@
+include share-mixins.pug
+
+- var getGlobalPageParams ={pageIds:[2],noActive:true,groups:["menu_group", "search__global"]}
+- var getGlobalPage = macro_getPagesById(getGlobalPageParams);
+- var globalPage = getGlobalPage[2];
+- var siteTitle = globalPage.groups.menu_group.props.site_title__global.value;
+- var xhrRequestType = reqParams.get.xhrRequestType;
+
+case xhrRequestType
+    when 'filter'
+        include catalog/products-filter.pug
+    when 'registration'
+        include registration/registration-response
+    when 'auth'
+        include authorization/authorization-response
+    when 'header-toolbar'
+        include header-toolbar.pug
+    when 'logout'
+        include logout-responce.pug
+    when 'password-recovery'
+        include password-recovery/password-recovery-response
+    when 'password-recovery-new-password'
+        include password-recovery/password-recovery-new-password-response
+    when 'add-to-basket'
+        include basket/add-basket-response
+    when 'update-basket'
+        include basket/update-basket-response
+    when 'get-basket-view'
+        include basket/basket
+    when 'get-top-basket-view'
+        include basket/top-basket
+    when 'ordering-response'
+        include ordering/ordering-response
+    when 'send-message-response'
+        include forms/send-message/send-message-response
+    default
+        doctype html
+        html
+            head
+                link(rel="stylesheet", href="/css/client/reset.css")
+                link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500")
+                link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+                link(rel="stylesheet", href="/css/client/material.css")
+                link(rel="stylesheet", href="/css/client/style.css")
+                script(src='/js/client/material.js')
+                script(src='/js/client/tiny-slider.js')
+                script(src='/js/client/script.js')
+            body
+                #main-wrap
+                    .mdc-toolbar.mdc-toolbar--flexible-space-maximized
+                        .mdc-toolbar__row
+                            .mdc-toolbar__section.mdc-toolbar__section--align-start
+                                a.mdc-toolbar__title.main-link(href='/')!= siteTitle
+                            #header-toolbar
+                                include header-toolbar
+                    #content-footer
+                        #content-wrap
+                            include left-menu.pug
+                            .content
+                                case pageInfo.page.url
+                                    when "/"
+                                        include main-page
+                                        h3.main-catalog-title.mdc-typography--headline5= 'Catalog'
+                                        include catalog/catalog
+                                        #send-message-main
+                                            h3.mdc-typography--headline5= 'Send Message'
+                                            include forms/send-message/send-message
+                                    default
+                                         include content-page
+                        include footer.pug
+                        include authorization/authorization
+                        include password-recovery/password-recovery
+                #info-snack.mdc-snackbar
+                    .mdc-snackbar__text
+                    .mdc-snackbar__action-wrapper
+                        button.mdc-snackbar__action-button(type='button')
+                #search-overlay
+                    .overlay
+                    .search-block
+                        #search-string.mdc-text-field.mdc-text-field--outlined
+                            input.mdc-text-field__input
+                            label.mdc-floating-label(for='search-string') Search
+                            .mdc-notched-outline
+                                svg
+                                    path.mdc-notched-outline__path
+                            .mdc-notched-outline__idle
